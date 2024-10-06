@@ -49,17 +49,24 @@ function CropSolutionForm() {
       <h2>Add Crop Solution</h2>
       {error && <p className="error-message">{error}</p>}
       <form className="crop-solution-form" onSubmit={sendData}>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            placeholder="Enter Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
+      <div className="form-group">
+  <label htmlFor="title">Title</label>
+  <input
+    type="text"
+    id="title"
+    placeholder="Enter Title"
+    value={title}
+    onChange={(e) => {
+      const newValue = e.target.value;
+      // Allow only non-numeric input
+      if (!/\d/.test(newValue)) {
+        setTitle(newValue);
+      }
+    }}
+    required
+  />
+</div>
+
         <div className="form-group">
           <label htmlFor="image">Upload Image</label>
           <input

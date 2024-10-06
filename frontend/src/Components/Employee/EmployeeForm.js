@@ -15,6 +15,7 @@ function EmployeeForm() {
     const [profileImage, setProfileImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
 
     // Handler for image upload
     function handleImageChange(e) {
@@ -180,39 +181,75 @@ function EmployeeForm() {
             <h2>Add Employee</h2>
             {error && <p className="error-message">{error}</p>}
             <form className="employee-form" onSubmit={sendData}>
-                <div className="form-group">
-                    <label htmlFor="firstName">First Name</label>
-                    <input
-                        type="text"
-                        id="firstName"
-                        placeholder="Enter First Name"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input
-                        type="text"
-                        id="lastName"
-                        placeholder="Enter Last Name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
+            <div className="form-group">
+    <label htmlFor="firstName">First Name</label>
+    <input
+        type="text"
+        id="firstName"
+        placeholder="Enter First Name"
+        value={firstName}
+        onChange={(e) => {
+            const value = e.target.value;
+            // Allow only letters and spaces
+            if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
+                setFirstName(value);
+            }
+        }}
+        required
+    />
+</div>
+
+<div className="form-group">
+    <label htmlFor="lastName">Last Name</label>
+    <input
+        type="text"
+        id="lastName"
+        placeholder="Enter Last Name"
+        value={lastName}
+        onChange={(e) => {
+            const value = e.target.value;
+            // Allow only letters and spaces
+            if (/^[a-zA-Z\s]*$/.test(value) || value === '') {
+                setLastName(value);
+            }
+        }}
+        required
+    />
+</div>
+
+<label htmlFor="email">Email</label>
+<input
+  type="email"
+  id="email"
+  placeholder="Enter Email"
+  value={email}
+  onChange={(e) => {
+    const value = e.target.value;
+    // Simple email regex for validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Allow all input initially
+    setEmail(value);
+
+    // Check if the value is invalid
+    if (!emailPattern.test(value) && value !== "") {
+      // Show error if needed (you might want to set an error state here)
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Invalid email format",
+      }));
+    } else {
+      // Clear the error if valid
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "",
+      }));
+    }
+  }}
+  required
+/>
+{errors.email && <span className="error">{errors.email}</span>}
+
                 <div className="form-group">
                     <label htmlFor="position">Designation</label>
                     <select

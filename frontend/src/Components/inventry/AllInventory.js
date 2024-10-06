@@ -245,6 +245,8 @@ function AllInventory() {
                         <th>Category</th>
                         <th>Unit</th>
                         <th>Quantity Available</th>
+                        <th>Mfd Date</th>
+                        <th>Exp Date</th>
                         <th>Supply Date</th>
                         <th>Action</th>
                     </tr>
@@ -260,6 +262,8 @@ function AllInventory() {
                                 <td>{item.category}</td>
                                 <td>{item.unit}</td>
                                 <td>{item.quantityAvailable}</td>
+                                <th>{item.mfdDate}</th>
+                                <th>{item.expireDate}</th>
                                 <td>{item.supplyDate}</td>
                                 <td>
                                     <button className="delete-btn" onClick={() => handleDelete(item._id)}>Delete</button>

@@ -80,7 +80,9 @@ import SalesOrder from './Components/Order/SalesOrder';
 import CropSolutionDashboard from './Components/inventry/CropSolutionDashboard';
 import OfferDashboard from './Components/inventry/OfferDashboard';
 import BestSellerDashboard from './Components/inventry/BestSellerDashboard';
-
+import Cashbook from './Components/finance/Cashbook';
+import Attendance from './Components/Employee/Attendance';
+import AttendanceDashboard from './Components/Employee/Employeecss/AttendanceDashboard';
 
 
 function App() {
@@ -923,6 +925,57 @@ function App() {
                   <OrderSide />
                   <div className="content">
                     <SalesOrder />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <Navigate to="/admin/login" />
+            )
+          } />
+
+
+          <Route path="/admin/cashbook" element={
+            isAdmin ? (
+              <>
+                <NavbarA />
+                <div className="main-content">
+                  <FinanceSidebar />
+                  <div className="content">
+                    <Cashbook />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <Navigate to="/admin/login" />
+            )
+          } />
+
+
+          <Route path="/admin/employee/attendence" element={
+            isAdmin ? (
+              <>
+                <NavbarA />
+                <div className="main-content">
+                  <SidebarE />
+                  <div className="content">
+                    <Attendance />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <Navigate to="/admin/login" />
+            )
+          } />
+
+
+          <Route path="/admin/employee/attDashboard" element={
+            isAdmin ? (
+              <>
+                <NavbarA />
+                <div className="main-content">
+                  <SidebarE />
+                  <div className="content">
+                    <AttendanceDashboard />
                   </div>
                 </div>
               </>

@@ -22,7 +22,7 @@ const connection = mongoose.connection;
 connection.once("open", () => {
     console.log("MongoDB connection successful!");
 });
-
+const attendancesRoutes = require('./routes/attendances');
 const InventoryItemRouter = require("./routes/InventoryItems.js");
 const ShowcaseRouter = require("./routes/Showcase.js");
 const CartRouter = require("./routes/Cards.js");
@@ -43,7 +43,7 @@ app.use("/inventoryalert", inventoryAlertRoutes);
 app.use("/auth", authRouter);
 
 
-
+app.use('/api/attendances', attendancesRoutes);
 const OfferRouter = require("./routes/Offer");
 app.use("/offers", OfferRouter);
 app.use("/api/givechecks", giveChecksRoutes);
