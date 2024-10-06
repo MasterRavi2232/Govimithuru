@@ -50,17 +50,24 @@ function BestSellingForm() {
       <h2>Add Best Selling Item</h2>
       {error && <p className="error-message">{error}</p>}
       <form className="best-selling-form" onSubmit={sendData}>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            placeholder="Enter Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
+      <div className="form-group">
+  <label htmlFor="title">Title</label>
+  <input
+    type="text"
+    id="title"
+    placeholder="Enter Title"
+    value={title}
+    onChange={(e) => {
+      const newValue = e.target.value;
+      // Only update state if the new value does not contain numbers
+      if (!/\d/.test(newValue)) {
+        setTitle(newValue);
+      }
+    }}
+    required
+  />
+</div>
+
         <div className="form-group">
           <label htmlFor="image">Upload Image</label>
           <input
