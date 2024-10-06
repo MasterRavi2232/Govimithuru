@@ -25,7 +25,7 @@ const deliverySchema = new mongoose.Schema({
 // Pre-save hook to send email when delivery is processed
 deliverySchema.pre('save', async function (next) {
     if (this.isNew) { // Check if it's a new delivery
-        this.status = "Delivered"; // Update the status to Delivered
+        this.status = "Pending"; // Update the status to Delivered
         
         try {
             const emailContent = createDeliveryEmailContent(this);
