@@ -32,6 +32,14 @@ const AlertDashboard = () => {
         }
     };
 
+    const formatDateTime = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        const formattedDate = date.toISOString().split('T')[0]; // YYYY-MM-DD
+        const hours = String(date.getUTCHours()).padStart(2, '0'); // HH
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0'); // MM
+        return `${formattedDate} at ${hours}.${minutes}`;
+    };
+
     if (loading) return <p>Loading alerts...</p>;
     if (error) return <p>{error}</p>;
 
@@ -41,7 +49,7 @@ const AlertDashboard = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Item</th>
+                        
                         <th>Alert Message</th>
                         <td>Date</td>
                         <th>Action</th>
@@ -51,9 +59,8 @@ const AlertDashboard = () => {
                     {alerts.length > 0 ? (
                         alerts.map((alert) => (
                             <tr key={alert._id}>
-                                <td>{alert.itemId?.name}</td>
                                 <td>{alert.message}</td>
-                                <td>{alert.createdAt}</td>
+                                <td>{formatDateTime(alert.createdAt)}</td>
                                 <td>
                                     <button onClick={() => handleDeleteAlert(alert._id)}>
                                         Delete

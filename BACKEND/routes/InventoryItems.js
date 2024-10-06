@@ -3,7 +3,7 @@ let InventoryItem = require("../models/InventoryItem");
 
 // Add Inventory Item
 router.route("/add").post((req, res) => {
-    const { name, supName, description, category, unit, quantityAvailable, supplyDate } = req.body;
+    const { name, supName, description, category, unit, quantityAvailable, supplyDate,mfdDate,expireDate} = req.body;
 
     const newInventoryItem = new InventoryItem({
         name,
@@ -12,6 +12,8 @@ router.route("/add").post((req, res) => {
         category,
         unit,
         quantityAvailable,
+        mfdDate: new Date(mfdDate),
+        expireDate:new Date(expireDate),
         supplyDate: new Date(supplyDate) // Store only the date part
     });
 

@@ -28,9 +28,20 @@ const InventoryItemSchema = new mongoose.Schema({
     supplyDate: {
         type: Date,
         required: true,
-        // This getter formats the date when retrieving from the database
-        get: (v) => v.toISOString().split('T')[0],
-        // This setter ensures only the date is stored, not the time
+        get: (v) => v ? v.toISOString().split('T')[0] : null,
+        set: (v) => new Date(v.toISOString().split('T')[0]),
+    },
+    mfdDate: {
+        type: Date,
+        required: true,
+        get: (v) => v ? v.toISOString().split('T')[0] : null,
+        set: (v) => new Date(v.toISOString().split('T')[0]),
+    },
+    expireDate: {
+        type: Date,
+        required: true,
+       
+        get: (v) => v ? v.toISOString().split('T')[0] : null,
         set: (v) => new Date(v.toISOString().split('T')[0]),
     },
 }, { toJSON: { getters: true }, toObject: { getters: true } });

@@ -12,8 +12,8 @@ function SidebarA() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/sells" activeClassName="active-link">
-            Balance
+          <NavLink to="/admin/cashbook" activeClassName="active-link">
+            CashBook
           </NavLink>
         </li>
         <li>

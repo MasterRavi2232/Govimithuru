@@ -3,8 +3,6 @@ import './css/InventorySupplyform.css';
 import axios from "axios";
 
 const predefinedItems = [
-
-
   //seed
 
   "Tomato Seed","Pumpkin Seed","Cucumber Seed","Carrot Seed","Pepper Seed",
@@ -123,6 +121,8 @@ function InventorySupplyform() {
   const [unit, setUnit] = useState("kg");
   const [quantityAvailable, setQuantityAvailable] = useState("");
   const [supplyDate, setSupplyDate] = useState("");
+  const [mfdDate, setMfdDate] = useState("");
+  const [expireDate, setExpireDate] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   function sendDate(e) {
@@ -137,7 +137,9 @@ function InventorySupplyform() {
       category,
       unit: finalUnit,
       quantityAvailable: Number(quantityAvailable),
-      supplyDate
+      supplyDate,
+      mfdDate,
+      expireDate
     };
 
     axios.post("http://localhost:8000/inventoryitem/add", newSupItem)
@@ -152,6 +154,8 @@ function InventorySupplyform() {
         setUnit("kg");
         setQuantityAvailable("");
         setSupplyDate("");
+        setMfdDate("");
+        setExpireDate("");
         setPhoneNumber("");
       })
       .catch((err) => {
@@ -188,20 +192,18 @@ function InventorySupplyform() {
         <div className="form-group">
           <label htmlFor="companyName">Company Name</label>
           <input
-    type="text"
-    id="companyName"
-    required
-    placeholder="Enter Company Name"
-    value={companyName}
-    onChange={(e) => setCompanyName(e.target.value)}
-    onKeyPress={(e) => {
-        // Allow only letters (a-z, A-Z) and spaces
-        if (!/^[a-zA-Z\s]*$/.test(e.key)) {
-            e.preventDefault();
-        }
-    }}
-/>
-
+            type="text"
+            id="companyName"
+            required
+            placeholder="Enter Company Name"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            onKeyPress={(e) => {
+              if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                e.preventDefault();
+              }
+            }}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="description">Description</label>
@@ -235,27 +237,26 @@ function InventorySupplyform() {
           </select>
         </div>
         <div className="form-group">
-  <label htmlFor="packetSize">Packet Size</label>
-  <input
-    type="number"
-    required
-    id="packetSize"
-    min="1"
-    max="1000"
-    value={packetSize}
-    onChange={(e) => {
-      const value = parseInt(e.target.value, 10);
-      if (value >= 1 && value <= 1000) {
-        setPacketSize(value);
-      } else if (value > 1000) {
-        setPacketSize(1000); // Optionally, cap it at 1000 if the user goes above
-      } else if (value < 1) {
-        setPacketSize(1); // Optionally, set it to 1 if the user enters a negative number or 0
-      }
-    }}
-  />
-</div>
-
+          <label htmlFor="packetSize">Packet Size</label>
+          <input
+            type="number"
+            required
+            id="packetSize"
+            min="1"
+            max="1000"
+            value={packetSize}
+            onChange={(e) => {
+              const value = parseInt(e.target.value, 10);
+              if (value >= 1 && value <= 1000) {
+                setPacketSize(value);
+              } else if (value > 1000) {
+                setPacketSize(1000);
+              } else if (value < 1) {
+                setPacketSize(1);
+              }
+            }}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="unit">Unit</label>
           <select
@@ -271,41 +272,59 @@ function InventorySupplyform() {
           </select>
         </div>
         <div className="form-group">
-  <label htmlFor="quantity">Quantity Available</label>
-  <input
-    type="number"
-    required
-    id="quantity"
-    placeholder="Enter Quantity"
-    min="1"
-    max="1000"
-    value={quantityAvailable}
-    onChange={(e) => {
-      const value = parseInt(e.target.value, 10);
-      if (value >= 1 && value <= 1000) {
-        setQuantityAvailable(value);
-      } else if (value > 1000) {
-        setQuantityAvailable(1000); // Optionally cap the value at 1000
-      } else if (value < 1) {
-        setQuantityAvailable(1); // Optionally set it to 1 if the user enters a value less than 1
-      }
-    }}
-  />
-</div>
-
-<div className="form-group">
-  <label htmlFor="supplyDate">Supply Date</label>
-  <input
-  required
-    type="date"
-    id="supplyDate"
-    value={supplyDate}
-    max={new Date().toISOString().split("T")[0]} // Set the max attribute to today's date
-    onChange={(e) => setSupplyDate(e.target.value)}
-  />
-</div>
-
-
+          <label htmlFor="quantity">Quantity Available</label>
+          <input
+            type="number"
+            required
+            id="quantity"
+            placeholder="Enter Quantity"
+            min="1"
+            max="1000"
+            value={quantityAvailable}
+            onChange={(e) => {
+              const value = parseInt(e.target.value, 10);
+              if (value >= 1 && value <= 1000) {
+                setQuantityAvailable(value);
+              } else if (value > 1000) {
+                setQuantityAvailable(1000);
+              } else if (value < 1) {
+                setQuantityAvailable(1);
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="supplyDate">Supply Date</label>
+          <input
+            required
+            type="date"
+            id="supplyDate"
+            value={supplyDate}
+            max={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setSupplyDate(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+                <label htmlFor="mfdDate">Manufacturing Date</label>
+                <input
+                    required
+                    type="date"
+                    id="mfdDate"
+                    value={mfdDate}
+                    onChange={(e) => setMfdDate(e.target.value)}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="expireDate">Expiration Date</label>
+                <input
+                    required
+                    type="date"
+                    id="expireDate"
+                    value={expireDate}
+                    min={new Date(mfdDate).setDate(new Date(mfdDate).getDate() + 1) ? new Date(mfdDate).toISOString().split('T')[0] : ''}
+                    onChange={(e) => setExpireDate(e.target.value)}
+                />
+            </div>
         <div className="form-group">
           <label htmlFor="phoneNumber">Phone Number</label>
           <input
@@ -316,7 +335,7 @@ function InventorySupplyform() {
             value={phoneNumber}
             onChange={(e) => {
               const value = e.target.value;
-              if (/^\d{0,10}$/.test(value)) { // Allow only up to 10 digits
+              if (/^\d{0,10}$/.test(value)) {
                 setPhoneNumber(value);
               }
             }}
